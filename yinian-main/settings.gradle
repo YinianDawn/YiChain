@@ -1,0 +1,8 @@
+rootProject.name = 'yinian-main'
+
+include ':model'       // model 基本对象
+
+include ':core'        // core 核心链与操作
+
+include ':main'        // main 运行
+
