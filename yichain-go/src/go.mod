@@ -1,5 +1,3 @@
-module yichain
+module yichain-go
 
 go 1.13
-
-replace github.com/YinianDawn/yichain/yichain-go/src => ./

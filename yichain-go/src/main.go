@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/YinianDawn/yichain/yichain-go/src/app"
 	"os"
+	"yichain-go/app"
 )
 
 func main() {
