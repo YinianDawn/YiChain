@@ -1,0 +1,69 @@
+package yichain
+
+Contract :public {
+
+    permissions     :private    :HashMap<String, Permission>
+    balances        :private    :HashMap<long, HashMap<long, Balance>>
+    nonce           :private    :long 
+
+    // 修改权限方法
+    authorize :public => (method :String, threshold :int, thresholds :HashMap<String, int>{}) {
+        if !permissions.contains(method) {
+            permissions.put(method, Permission{ threshold -> 1 })
+        }
+        permission -> permissions.get(method)
+        if threshold = 0 {
+            permission.threshold -> 0
+            permission.thresholds.clear()
+            return
+        } else if threshold > 0 && threshold != permission.threshold {
+            // 修改了 threshold 按比例调整
+            old => permission.threshold
+            permission.threshold -> threshold
+            for address in permission.thresholds.keys() {
+                permission.thresholds.put(address, threshold * permission.thresholds.get(address) / old)
+            } 
+        }
+        for address in thresholds.keys() {
+            permission.thresholds.put(address, thresholds.get(address))
+        } 
+    }
+
+    {
+        this.authorize("authorize", 1)
+        this.authorize("give", 0)
+        this.authorize("take", 1)
+    }
+
+    // 初始化
+    init :protected : -> () { }
+
+    // 收钱的方法
+
+    give :public => (balance :BigInteger, condition :Condition{ check -> true }) {
+        height => // TODO 通过什么方式获取高度?
+        if !balances.contains(height) {
+            balances.put(height, HashMap<long, Balance>{})
+        }
+        map -> balances.get(height)
+        map.put(map.size(), Balance{balance, condition})
+    }
+
+    given :protected :() : -> { }
+
+    
+    // 取钱的方法
+
+    take :public => (balance :BigInteger{}, index :long[][]{}) {
+        if 0 < balance {
+            // TODO 希望取多少钱 不论 位置
+
+        } else {
+            // TODO 取指定位置的钱
+
+        }
+    }
+
+    taken :protected :() : -> { }
+
+}

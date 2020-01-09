@@ -1,0 +1,8 @@
+package yichain
+
+import "canoe/math"
+
+Balance :public {
+    balance     :private    :BigInteger 
+    condition   :private    :Condition 
+}

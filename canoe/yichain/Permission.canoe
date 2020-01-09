@@ -1,0 +1,7 @@
+package yichain
+
+Permission :public {
+    threshold   :private    :int 
+    thresholds  :private    :HashMap<String, int>
+}
+

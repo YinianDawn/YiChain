@@ -1,0 +1,5 @@
+package yichain
+
+Condition :public {
+    check :bool :()
+}
